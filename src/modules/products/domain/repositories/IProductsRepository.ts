@@ -5,10 +5,11 @@ import { IUpdateStockProduct } from '../models/IUpdateStockProduct';
 import { IProductPaginate } from '../models/IProductPaginate';
 
 export interface IProductsRepository {
-  findByName(name: string): Promise<IProductPaginate>;
+  findByName(name: string): Promise<IProduct | undefined>;
   findById(id: string): Promise<IProduct | undefined>;
   findAll(): Promise<IProduct[]>;
   findAllPaginate(): Promise<IProductPaginate>;
+  searchAllPaginate(name: string): Promise<IProductPaginate>;
   findAllByIds(products: IFindProducts[]): Promise<IProduct[]>;
   create(data: ICreateProduct): Promise<IProduct>;
   save(product: IProduct): Promise<IProduct>;

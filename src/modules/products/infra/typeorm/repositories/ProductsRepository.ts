@@ -67,6 +67,15 @@ class ProductsRepository implements IProductsRepository {
     return products as IProductPaginate;
   }
 
+  public async searchAllPaginate(name: string): Promise<IProductPaginate> {
+    const products = await this.ormRepository
+      .createQueryBuilder()
+      .where('name ILIKE :name', { name: `%${name}%` })
+      .paginate();
+
+    return products as IProductPaginate;
+  }
+
   public async findAllByIds(products: IFindProducts[]): Promise<Product[]> {
     const productIds = products.map(product => product.id);
 

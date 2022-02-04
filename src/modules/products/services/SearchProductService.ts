@@ -12,7 +12,7 @@ class SearchProductService {
   ) {}
 
   public async execute({ name }: ISearchProduct): Promise<IProductPaginate> {
-    const product = await this.productsRepository.findByName(name);
+    const product = await this.productsRepository.searchAllPaginate(name);
 
     if (!product) {
       throw new AppError('Product not found.');
