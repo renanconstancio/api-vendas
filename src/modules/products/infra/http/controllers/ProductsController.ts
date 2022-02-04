@@ -8,19 +8,21 @@ import UpdateProductService from '@modules/products/services/UpdateProductServic
 import SearchProductService from '@modules/products/services/SearchProductService';
 
 export default class ProductsController {
-  public async search(request: Request, response: Response): Promise<Response> {
-    // const { name } = request.params;
-    // const listProducts = container.resolve(SearchProductService);
-
-    // const products = await listProducts.execute({ name });
-
-    return response.json({ request });
-  }
-
   public async index(request: Request, response: Response): Promise<Response> {
     const listProducts = container.resolve(ListProductService);
 
     const products = await listProducts.execute();
+
+    return response.json(products);
+  }
+
+  public async search(request: Request, response: Response): Promise<Response> {
+    const { name } = request.query;
+    const qname = name;
+
+    const listProducts = container.resolve(SearchProductService);
+
+    const products = await listProducts.execute({ name: qname });
 
     return response.json(products);
   }
