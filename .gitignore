@@ -1,8 +1,5 @@
-.docker
-!.docker/conf.d/
-!.docker/postgres/Dockerfile
-!.docker/public
-!.docker/entrypoint.sh
+.docker/certbot
+.docker/postgres/data
 .idea/
 node_modules/
 build/

@@ -1,0 +1,181 @@
+2022-02-05 16:29:03,505:DEBUG:certbot._internal.main:certbot version: 1.22.0
+2022-02-05 16:29:03,506:DEBUG:certbot._internal.main:Location of certbot entry point: /usr/local/bin/certbot
+2022-02-05 16:29:03,506:DEBUG:certbot._internal.main:Arguments: ['--webroot', '--webroot-path=/var/www/certbot', '--email', 'renanhconstancio@goamil.com', '--agree-tos', '--no-eff-email', '-d', 'apivendas.test', '-d', 'www.apivendas.test']
+2022-02-05 16:29:03,506:DEBUG:certbot._internal.main:Discovered plugins: PluginsRegistry(PluginEntryPoint#manual,PluginEntryPoint#null,PluginEntryPoint#standalone,PluginEntryPoint#webroot)
+2022-02-05 16:29:10,766:DEBUG:certbot._internal.log:Root logging level set at 30
+2022-02-05 16:29:10,866:DEBUG:certbot._internal.plugins.selection:Requested authenticator webroot and installer None
+2022-02-05 16:29:10,899:DEBUG:certbot._internal.plugins.selection:Single candidate plugin: * webroot
+Description: Place files in webroot directory
+Interfaces: Authenticator, Plugin
+Entry point: webroot = certbot._internal.plugins.webroot:Authenticator
+Initialized: <certbot._internal.plugins.webroot.Authenticator object at 0x7f59f96daa00>
+Prep: True
+2022-02-05 16:29:10,976:DEBUG:certbot._internal.plugins.selection:Selected authenticator <certbot._internal.plugins.webroot.Authenticator object at 0x7f59f96daa00> and installer None
+2022-02-05 16:29:11,012:INFO:certbot._internal.plugins.selection:Plugins selected: Authenticator webroot, Installer None
+2022-02-05 16:29:12,012:DEBUG:acme.client:Sending GET request to https://acme-v02.api.letsencrypt.org/directory.
+2022-02-05 16:29:12,137:DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): acme-v02.api.letsencrypt.org:443
+2022-02-05 16:29:14,555:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "GET /directory HTTP/1.1" 200 658
+2022-02-05 16:29:14,600:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Sat, 05 Feb 2022 16:29:15 GMT
+Content-Type: application/json
+Content-Length: 658
+Connection: keep-alive
+Cache-Control: public, max-age=0, no-cache
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "IUq3Ic-XoSA": "https://community.letsencrypt.org/t/adding-random-entries-to-the-directory/33417",
+  "keyChange": "https://acme-v02.api.letsencrypt.org/acme/key-change",
+  "meta": {
+    "caaIdentities": [
+      "letsencrypt.org"
+    ],
+    "termsOfService": "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf",
+    "website": "https://letsencrypt.org"
+  },
+  "newAccount": "https://acme-v02.api.letsencrypt.org/acme/new-acct",
+  "newNonce": "https://acme-v02.api.letsencrypt.org/acme/new-nonce",
+  "newOrder": "https://acme-v02.api.letsencrypt.org/acme/new-order",
+  "revokeCert": "https://acme-v02.api.letsencrypt.org/acme/revoke-cert"
+}
+2022-02-05 16:29:14,620:DEBUG:acme.client:Requesting fresh nonce
+2022-02-05 16:29:14,624:DEBUG:acme.client:Sending HEAD request to https://acme-v02.api.letsencrypt.org/acme/new-nonce.
+2022-02-05 16:29:14,942:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "HEAD /acme/new-nonce HTTP/1.1" 200 0
+2022-02-05 16:29:14,952:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Sat, 05 Feb 2022 16:29:15 GMT
+Connection: keep-alive
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: 01027dg8eBgUViGfp8KgcnnFiy5zPzwNjusMBFaK-DGt1TA
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+
+2022-02-05 16:29:14,961:DEBUG:acme.client:Storing nonce: 01027dg8eBgUViGfp8KgcnnFiy5zPzwNjusMBFaK-DGt1TA
+2022-02-05 16:29:14,973:DEBUG:acme.client:JWS payload:
+b'{\n  "contact": [\n    "mailto:renanhconstancio@goamil.com"\n  ],\n  "termsOfServiceAgreed": true\n}'
+2022-02-05 16:29:15,054:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/new-acct:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAiandrIjogeyJuIjogIm0xdXpxWGJaNnR3X2MxeTlhazBQZ2NMa1pCUjFZaEVTSjMxZG1Md1FvVk1rbHEtbXhSNmNlQ3NOQkZZMm80dVN2YnkzUms1dXNYV2tYTk54RFI2b2FRbEhfSkh3cmdUa3ZyRkk4LTVQUHJ3YVEzSzdmWGxwdlhQbEtYdERkaEI4dG05NG1wM2IyWWFvM1J2U0dPR0tENnAzTmlrYm9rVEU1RlR0Q0ZVM1Aya2pmSGkxQmtROG1kLWVmMFdNU2NTQUFLYmRGekItSVV4ckdyMllkTFc3ZmFoa2pNNF9jX3Y1TDdncWdlcndaak5hUGlPVDVHN0RSSzlqWDc2QzVwMkhreVFOSDlpcVp1bl9PcURsOHllWFNCZ2luNGdOTHlTMnZxV25RYkJheXZOeDc0NjBCYTFIT0RkWnV0X2wzeGx0Z3pNaUtQd282NjR1cWRGeGM4QVVoUSIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSJ9LCAibm9uY2UiOiAiMDEwMjdkZzhlQmdVVmlHZnA4S2djbm5GaXk1elB6d05qdXNNQkZhSy1ER3QxVEEiLCAidXJsIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL25ldy1hY2N0In0",
+  "signature": "LZlZ-qwp2T1WQZygfxPjRjU__elpHJ1Ldk2Opl5UdPuQDLd3LxldJtGvdPN08XdWC43Ubsj64swPBqkaX9her6o00JcCR7yfhqSYazpAwM3FocK9FCyCRR_vpaYUtC7FKdb0_ftUhCbzqI47wi2Ts7hEx-trjvFWt15okOegkCpkKdJPtdtDPLvY4hDd_J6VVy371jnFrK5cUSf72_TsY6gYsPKfBoxnulQ4HrVWsRFqtjiPu3XWhGNQclZyUEWV7I8HzAN4oG-nkK3aDTu5DqS7O5k3Ulik4R_mmDoONoLH4ihOFlzu5UC9VtJB2l7sTgMpC_7vYcuS_9UP6zAHVw",
+  "payload": "ewogICJjb250YWN0IjogWwogICAgIm1haWx0bzpyZW5hbmhjb25zdGFuY2lvQGdvYW1pbC5jb20iCiAgXSwKICAidGVybXNPZlNlcnZpY2VBZ3JlZWQiOiB0cnVlCn0"
+}
+2022-02-05 16:29:15,381:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/new-acct HTTP/1.1" 201 569
+2022-02-05 16:29:15,391:DEBUG:acme.client:Received response:
+HTTP 201
+Server: nginx
+Date: Sat, 05 Feb 2022 16:29:16 GMT
+Content-Type: application/json
+Content-Length: 569
+Connection: keep-alive
+Boulder-Requester: 395931490
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index", <https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf>;rel="terms-of-service"
+Location: https://acme-v02.api.letsencrypt.org/acme/acct/395931490
+Replay-Nonce: 0102SMmeU_I3rEeCxjJVqEX1JW9Bra0qDlLbQvUBJ4iEd6U
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "key": {
+    "kty": "RSA",
+    "n": "m1uzqXbZ6tw_c1y9ak0PgcLkZBR1YhESJ31dmLwQoVMklq-mxR6ceCsNBFY2o4uSvby3Rk5usXWkXNNxDR6oaQlH_JHwrgTkvrFI8-5PPrwaQ3K7fXlpvXPlKXtDdhB8tm94mp3b2Yao3RvSGOGKD6p3NikbokTE5FTtCFU3P2kjfHi1BkQ8md-ef0WMScSAAKbdFzB-IUxrGr2YdLW7fahkjM4_c_v5L7gqgerwZjNaPiOT5G7DRK9jX76C5p2HkyQNH9iqZun_OqDl8yeXSBgin4gNLyS2vqWnQbBayvNx7460Ba1HODdZut_l3xltgzMiKPwo664uqdFxc8AUhQ",
+    "e": "AQAB"
+  },
+  "contact": [
+    "mailto:renanhconstancio@goamil.com"
+  ],
+  "initialIp": "177.52.29.182",
+  "createdAt": "2022-02-05T16:29:16.42917022Z",
+  "status": "valid"
+}
+2022-02-05 16:29:15,410:DEBUG:acme.client:Storing nonce: 0102SMmeU_I3rEeCxjJVqEX1JW9Bra0qDlLbQvUBJ4iEd6U
+2022-02-05 16:29:16,318:DEBUG:certbot._internal.display.obj:Notifying user: Account registered.
+2022-02-05 16:29:16,321:DEBUG:certbot._internal.main:Picked account: <Account(RegistrationResource(body=Registration(key=JWKRSA(key=<ComparableRSAKey(<cryptography.hazmat.backends.openssl.rsa._RSAPublicKey object at 0x7f59f96d5700>)>), contact=('mailto:renanhconstancio@goamil.com',), agreement=None, status='valid', terms_of_service_agreed=None, only_return_existing=None, external_account_binding=None), uri='https://acme-v02.api.letsencrypt.org/acme/acct/395931490', new_authzr_uri=None, terms_of_service='https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf'), f1ca923811e923aa5bdd49716b3d962b, Meta(creation_dt=datetime.datetime(2022, 2, 5, 16, 29, 15, tzinfo=<UTC>), creation_host='bad2fcb2756b', register_to_eff=None))>
+2022-02-05 16:29:16,677:DEBUG:certbot._internal.display.obj:Notifying user: Requesting a certificate for apivendas.test and www.apivendas.test
+2022-02-05 16:29:18,420:DEBUG:certbot.crypto_util:Generating RSA key (2048 bits): /etc/letsencrypt/keys/0000_key-certbot.pem
+2022-02-05 16:29:18,738:DEBUG:certbot.crypto_util:Creating CSR: /etc/letsencrypt/csr/0000_csr-certbot.pem
+2022-02-05 16:29:18,759:DEBUG:acme.client:JWS payload:
+b'{\n  "identifiers": [\n    {\n      "type": "dns",\n      "value": "apivendas.test"\n    },\n    {\n      "type": "dns",\n      "value": "www.apivendas.test"\n    }\n  ]\n}'
+2022-02-05 16:29:18,812:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/new-order:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvMzk1OTMxNDkwIiwgIm5vbmNlIjogIjAxMDJTTW1lVV9JM3JFZUN4akpWcUVYMUpXOUJyYTBxRGxMYlF2VUJKNGlFZDZVIiwgInVybCI6ICJodHRwczovL2FjbWUtdjAyLmFwaS5sZXRzZW5jcnlwdC5vcmcvYWNtZS9uZXctb3JkZXIifQ",
+  "signature": "ViOA66NvjJXYmWLkf3lFCUkI4lW4PHzADGJ381eftt0p72p2bHq4VaoyyHasHAGWlI24Sf-GevR5wbAu9DaPwinqLz4ylkQzgOhyWeaXdYbwt1CMcNfEMR6CQVZicuItOXsmOncav4iYyz4ELW7DirmgRFi-nzpeUKcjwBzxmD_uV96XrjdcDWhaq-P3bSF-ozd5CxFkQ0yW-18FNRLB_ZFnWHoqHuV0YPRH6YtDrGSOAvF4cpwYvogAr02kK3Umwtlqu9utbqH-X8jaIjg-G6v5ZAneleCXwuFGu2axgvBsURo7Wy7mmCV_ijenzibY9_jBzqr7n_RgfWb6CvgLxg",
+  "payload": "ewogICJpZGVudGlmaWVycyI6IFsKICAgIHsKICAgICAgInR5cGUiOiAiZG5zIiwKICAgICAgInZhbHVlIjogImFwaXZlbmRhcy50ZXN0IgogICAgfSwKICAgIHsKICAgICAgInR5cGUiOiAiZG5zIiwKICAgICAgInZhbHVlIjogInd3dy5hcGl2ZW5kYXMudGVzdCIKICAgIH0KICBdCn0"
+}
+2022-02-05 16:29:19,160:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/new-order HTTP/1.1" 400 888
+2022-02-05 16:29:19,179:DEBUG:acme.client:Received response:
+HTTP 400
+Server: nginx
+Date: Sat, 05 Feb 2022 16:29:20 GMT
+Content-Type: application/problem+json
+Content-Length: 888
+Connection: keep-alive
+Boulder-Requester: 395931490
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: 0101za3SORJx9w0nBJ4mrk48m_oYsQzf5qYTYGDdfBGBGRU
+
+{
+  "type": "urn:ietf:params:acme:error:rejectedIdentifier",
+  "detail": "Error creating new order :: Cannot issue for \"apivendas.test\": Domain name does not end with a valid public suffix (TLD) (and 1 more problems. Refer to sub-problems for more information.)",
+  "status": 400,
+  "subproblems": [
+    {
+      "type": "urn:ietf:params:acme:error:rejectedIdentifier",
+      "detail": "Error creating new order :: Domain name does not end with a valid public suffix (TLD)",
+      "status": 400,
+      "identifier": {
+        "type": "dns",
+        "value": "apivendas.test"
+      }
+    },
+    {
+      "type": "urn:ietf:params:acme:error:rejectedIdentifier",
+      "detail": "Error creating new order :: Domain name does not end with a valid public suffix (TLD)",
+      "status": 400,
+      "identifier": {
+        "type": "dns",
+        "value": "www.apivendas.test"
+      }
+    }
+  ]
+}
+2022-02-05 16:29:19,193:DEBUG:certbot._internal.log:Exiting abnormally:
+Traceback (most recent call last):
+  File "/usr/local/bin/certbot", line 33, in <module>
+    sys.exit(load_entry_point('certbot', 'console_scripts', 'certbot')())
+  File "/opt/certbot/src/certbot/certbot/main.py", line 19, in main
+    return internal_main.main(cli_args)
+  File "/opt/certbot/src/certbot/certbot/_internal/main.py", line 1632, in main
+    return config.func(config, plugins)
+  File "/opt/certbot/src/certbot/certbot/_internal/main.py", line 1491, in certonly
+    lineage = _get_and_save_cert(le_client, config, domains, certname, lineage)
+  File "/opt/certbot/src/certbot/certbot/_internal/main.py", line 139, in _get_and_save_cert
+    lineage = le_client.obtain_and_enroll_certificate(domains, certname)
+  File "/opt/certbot/src/certbot/certbot/_internal/client.py", line 496, in obtain_and_enroll_certificate
+    cert, chain, key, _ = self.obtain_certificate(domains)
+  File "/opt/certbot/src/certbot/certbot/_internal/client.py", line 424, in obtain_certificate
+    orderr = self._get_order_and_authorizations(csr.data, self.config.allow_subset_of_names)
+  File "/opt/certbot/src/certbot/certbot/_internal/client.py", line 458, in _get_order_and_authorizations
+    orderr = self.acme.new_order(csr_pem)
+  File "/opt/certbot/src/acme/acme/client.py", line 936, in new_order
+    return cast(ClientV2, self.client).new_order(csr_pem)
+  File "/opt/certbot/src/acme/acme/client.py", line 702, in new_order
+    response = self._post(self.directory['newOrder'], order)
+  File "/opt/certbot/src/acme/acme/client.py", line 101, in _post
+    return self.net.post(*args, **kwargs)
+  File "/opt/certbot/src/acme/acme/client.py", line 1269, in post
+    return self._post_once(*args, **kwargs)
+  File "/opt/certbot/src/acme/acme/client.py", line 1283, in _post_once
+    response = self._check_response(response, content_type=content_type)
+  File "/opt/certbot/src/acme/acme/client.py", line 1128, in _check_response
+    raise messages.Error.from_json(jobj)
+acme.messages.Error: urn:ietf:params:acme:error:rejectedIdentifier :: The server will not issue certificates for the identifier :: Error creating new order :: Cannot issue for "apivendas.test": Domain name does not end with a valid public suffix (TLD) (and 1 more problems. Refer to sub-problems for more information.)
+2022-02-05 16:29:19,209:ERROR:certbot._internal.log:An unexpected error occurred:
+2022-02-05 16:29:19,224:ERROR:certbot._internal.log:The server will not issue certificates for the identifier :: Error creating new order :: Cannot issue for "apivendas.test": Domain name does not end with a valid public suffix (TLD) (and 1 more problems. Refer to sub-problems for more information.)
