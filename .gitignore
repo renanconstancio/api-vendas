@@ -1,4 +1,5 @@
 .docker
+!.docker/conf.d/
 !.docker/postgres/Dockerfile
 !.docker/public
 !.docker/entrypoint.sh
