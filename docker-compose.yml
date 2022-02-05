@@ -1,0 +1,69 @@
+version: '3'
+
+services:
+  app:
+    container_name: apivendas-app
+    build: .
+    entrypoint: .docker/entrypoint.sh
+    ports:
+      - '3333:3333'
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - db
+      - redis
+
+  db:
+    container_name: apivendas-db
+    build: .docker/postgres
+    restart: always
+    tty: true
+    ports:
+      - '5432:5432'
+    volumes:
+      - .docker/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=apivendas
+
+  redis:
+    container_name: apivendas-redis
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  pgadmin:
+    container_name: apivendas-pgadmin
+    image: dpage/pgadmin4
+    tty: true
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - '8000:80'
+    depends_on:
+      - db
+
+  nginx:
+    container_name: apivendas-nginx
+    image: nginx:1.15-alpine
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - .docker/public:/var/www/html
+      - .docker/conf.d:/etc/nginx/conf.d
+      - .docker/certbot/conf:/etc/nginx/ssl
+      - .docker/certbot/data:/var/www/certbot
+    depends_on:
+      - app
+
+  certbot:
+    container_name: apivendas-certbot
+    image: certbot/certbot:latest
+    command: certonly --webroot --webroot-path=/var/www/certbot --email renanhconstancio@gmail.com --agree-tos --no-eff-email -d apivendas.org -d www.apivendas.org
+    volumes:
+      - .docker/certbot/conf:/etc/letsencrypt
+      - .docker/certbot/logs:/var/log/letsencrypt
+      - .docker/certbot/data:/var/www/certbot

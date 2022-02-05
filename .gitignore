@@ -1,0 +1,14 @@
+.docker/*/data/
+.docker/certbot/
+node_modules/
+build/
+temp/
+.env
+coverage
+ormconfig.json
+dist/
+false
+
+uploads/*
+!uploads/.gitkeep
+temp
