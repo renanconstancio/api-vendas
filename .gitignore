@@ -1,5 +1,7 @@
-.docker/*/data/
-.docker/*/log/
+.docker
+!.docker/postgres/Dockerfile
+!.docker/public
+!.docker/entrypoint.sh
 .idea/
 node_modules/
 build/

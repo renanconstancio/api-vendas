@@ -47,24 +47,23 @@ services:
   nginx:
     container_name: apivendas-nginx
     image: nginx:1.15-alpine
-    restart: unless-stopped
+    restart: always
     ports:
       - 80:80
       - 443:443
     volumes:
-      - .docker/nginx/www:/var/www/
-      - .docker/nginx:/etc/nginx/conf.d
-      - .docker/certbot/conf:/etc/letsencrypt
-      - .docker/certbot/www:/var/www/certbot
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+      - .docker/public:/var/www/html
+      - .docker/conf.d:/etc/nginx/conf.d
+      - .docker/certbot/conf:/etc/nginx/ssl
+      - .docker/certbot/data:/var/www/certbot
     depends_on:
       - app
 
   certbot:
     container_name: apivendas-certbot
-    restart: unless-stopped
-    image: certbot/certbot
+    image: certbot/certbot:latest
+    command: certonly --webroot --webroot-path=/var/www/certbot --email renanhconstancio@gmail.com --agree-tos --no-eff-email -d apivendas.org -d www.apivendas.org
     volumes:
       - .docker/certbot/conf:/etc/letsencrypt
-      - .docker/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+      - .docker/certbot/logs:/var/log/letsencrypt
+      - .docker/certbot/data:/var/www/certbot
