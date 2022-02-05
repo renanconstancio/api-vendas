@@ -2,9 +2,9 @@ version: '3'
 
 services:
   app:
+    container_name: apivendas-app
     build: .
     entrypoint: .docker/entrypoint.sh
-    container_name: apivendas-app
     ports:
       - '3333:3333'
     volumes:
@@ -14,27 +14,27 @@ services:
       - redis
 
   db:
-    build: .docker/postgres
     container_name: apivendas-db
+    build: .docker/postgres
     restart: always
     tty: true
     ports:
       - '5432:5432'
     volumes:
-      - .docker/dbdata:/var/lib/postgresql/data
+      - .docker/postgres/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=apivendas
 
   redis:
-    image: 'bitnami/redis:latest'
     container_name: apivendas-redis
+    image: 'bitnami/redis:latest'
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
 
   pgadmin:
-    image: dpage/pgadmin4
     container_name: apivendas-pgadmin
+    image: dpage/pgadmin4
     tty: true
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
@@ -43,3 +43,28 @@ services:
       - '8000:80'
     depends_on:
       - db
+
+  nginx:
+    container_name: apivendas-nginx
+    image: nginx:1.15-alpine
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - .docker/nginx/www:/var/www/
+      - .docker/nginx:/etc/nginx/conf.d
+      - .docker/certbot/conf:/etc/letsencrypt
+      - .docker/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    depends_on:
+      - app
+
+  certbot:
+    container_name: apivendas-certbot
+    restart: unless-stopped
+    image: certbot/certbot
+    volumes:
+      - .docker/certbot/conf:/etc/letsencrypt
+      - .docker/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"

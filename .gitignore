@@ -1,6 +1,6 @@
-.docker/dbdata
+.docker/*/data/
+.docker/*/log/
 .idea/
-.vscode/
 node_modules/
 build/
 temp/
@@ -8,7 +8,8 @@ temp/
 coverage
 ormconfig.json
 dist
+false
+
 
 uploads/*
 !uploads/.gitkeep
-.DS_Store
