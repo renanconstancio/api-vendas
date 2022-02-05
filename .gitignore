@@ -1,5 +1,4 @@
-.docker/*/data/
-.docker/certbot/
+.docker/
 .idea/
 node_modules/
 build/
