@@ -52,18 +52,9 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - .docker/public:/var/www/html
+      - ./public_html:/var/www/html
       - .docker/conf.d:/etc/nginx/conf.d
-      - .docker/certbot/conf:/etc/nginx/ssl
-      - .docker/certbot/data:/var/www/certbot
+      - .ssl/certs:/etc/ssl/certs/
+      - .ssl/private:/etc/ssl/private/
     depends_on:
       - app
-
-  certbot:
-    container_name: apivendas-certbot
-    image: certbot/certbot:latest
-    command: certonly --webroot --webroot-path=/var/www/certbot --email renanhconstancio@gmail.com --agree-tos --no-eff-email -d apivendas.org -d www.apivendas.org
-    volumes:
-      - .docker/certbot/conf:/etc/letsencrypt
-      - .docker/certbot/logs:/var/log/letsencrypt
-      - .docker/certbot/data:/var/www/certbot
